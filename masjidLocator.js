@@ -19,7 +19,7 @@ let map;
                 zoom: 15,
               });
 
-              searchMosques(currentPos);
+              searchMosquesAndSuraus(currentPos);
               displayCurrentLocation();
             },
             () => {
@@ -29,10 +29,10 @@ let map;
         }
       }
 
-      function searchMosques(location) {
+      function searchMosquesAndSuraus(location) {
         const request = {
           location: location,
-          radius: "7000", // 5km radius
+          radius: "5000", // 5km radius
           type: ["mosque"],
         };
 
@@ -42,7 +42,16 @@ let map;
 
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          results.sort((a, b) => b.rating - a.rating); // Sort results by rating in descending order
+          results.sort((a, b) => {
+            if (a.types.includes("mosque") && !b.types.includes("mosque")) {
+              return -1;
+            } else if (!a.types.includes("mosque") && b.types.includes("mosque")) {
+              return 1;
+            } else {
+              return b.rating - a.rating; // Sort by rating within each type
+            }
+          });
+          
           const tableBody = document.querySelector("#mosqueTable tbody");
           tableBody.innerHTML = ""; // Clear previous results
           let row;
@@ -52,27 +61,27 @@ let map;
               tableBody.appendChild(row);
             }
             const cell = document.createElement("td");
-            cell.appendChild(createMosqueCard(results[i]));
+            cell.appendChild(createMosqueOrSurauCard(results[i]));
             row.appendChild(cell);
           }
         }
       }
 
-      function createMosqueCard(place) {
+      function createMosqueOrSurauCard(place) {
         const card = document.createElement("div");
-        card.classList.add("mosque-card");
+        card.classList.add("restaurant-card");
         card.addEventListener("click", () => {
           window.open(`https://www.google.com/maps/dir/?api=1&destination=${place.geometry.location.lat()},${place.geometry.location.lng()}`, "_blank");
         });
 
         const image = document.createElement("img");
-        image.src = place.photos 
-              ? place.photos[0].getUrl()
-              : "imagePlaceholder.jpg";
+        image.src = place.photos
+          ? place.photos[0].getUrl()
+          : "imagePlaceholder.jpg";
         image.alt = place.name;
 
         const info = document.createElement("div");
-        info.classList.add("mosque-info");
+        info.classList.add("restaurant-info");
 
         const name = document.createElement("h3");
         name.textContent = place.name;
@@ -110,7 +119,7 @@ let map;
             const district = locationDetails.find(comp => comp.types.includes("administrative_area_level_2"))?.long_name || '';
 
             const locationName = document.createElement("p");
-            locationName.textContent = `City: ${city}`;
+            locationName.textContent = `District: ${district}, City: ${city}`;
             currentLocationDiv.appendChild(locationName);
           }
         });
@@ -131,7 +140,7 @@ let map;
           if (status === "OK") {
             const location = results[0].geometry.location;
             map.setCenter(location);
-            searchMosques(location);
+            searchMosquesAndSuraus(location);
 
             // Update current location display
             const currentLocationDiv = document.querySelector(".current-location");
@@ -150,7 +159,7 @@ let map;
                 const district = locationDetails.find(comp => comp.types.includes("administrative_area_level_2"))?.long_name || '';
 
                 const locationName = document.createElement("p");
-                locationName.textContent = `City: ${city}`;
+                locationName.textContent = `District: ${district}, City: ${city}`;
                 currentLocationDiv.appendChild(locationName);
               }
             });
@@ -166,4 +175,4 @@ let map;
       document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("searchButton").addEventListener("click", handleSearch);
         initMap();
-      });F
+      });
