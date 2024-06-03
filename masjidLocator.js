@@ -66,9 +66,7 @@ let map;
         });
 
         const image = document.createElement("img");
-        image.src = place.photos
-          ? place.photos[0].getUrl()
-          : "default-mosque.jpg";
+        image.src = place.photos ? place.photos[0].getUrl(): "imagePlaceholder.jpg";
         image.alt = place.name;
 
         const info = document.createElement("div");
