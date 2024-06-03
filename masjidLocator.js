@@ -68,7 +68,7 @@ let map;
         const image = document.createElement("img");
         image.src = place.photos
           ? place.photos[0].getUrl()
-          : "default-mosque.jpg";
+          : "imagePlaceholder.jpg";
         image.alt = place.name;
 
         const info = document.createElement("div");
