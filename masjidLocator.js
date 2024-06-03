@@ -75,10 +75,9 @@ let map;
         });
 
         const image = document.createElement("img");
-        image.src = place.photos
-          ? place.photos[0].getUrl()
-          : "imagePlaceholder.jpg";
-        image.alt = place.name;
+       image.src = place.photos 
+              ? place.photos[0].getUrl()
+              : "imagePlaceholder.jpg";
 
         const info = document.createElement("div");
         info.classList.add("restaurant-info");
