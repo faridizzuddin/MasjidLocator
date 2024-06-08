@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="time-contnt.css">
+    <link rel="stylesheet" href="hadithChapter.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="header.css">
+
+    <title>Hadith Chapter</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <header style="margin-bottom: 1.9%">
+        <div class="logo">
+            <a href="Homepage.html">
+                <img class="logoStyle" src="images/logo2new.png" />
+            </a>
+        </div>
+
+        <nav class="navbar">
+            <a href="QiblaFinder.html">QIBLA FINDER</a>
+            <a href="masjidLocator.html">MOSQUE LOCATOR</a>
+            <a href="prayerTime.html">PRAY TIME</a>
+            <a href="hadithFinderBaru.html">HADITH</a>
+        </nav>
+    </header>
+
+    <div class="top-content">
+        <div class="left-top">
+            <h1>Mosque Locator</h1>
+        </div>
+        <div class="right-top1">
+            <h1><span id="time"></span></h1>
+            <script src="js/time.js"></script>
+        </div>
+    </div>
+    <div class="middle-content">
+        <hr style="margin-top: 2.1%; margin-bottom: 1%" />
+    </div>
+    <br><br>
+    <div class="hadith-details">
+        <table id="hadith-details">
+            <tr>
+                <th>Hadith Name</th>
+                <td id="hadith-name"></td>
+            </tr>
+            <tr>
+                <th>Hadith Writer</th>
+                <td id="hadith-name-writer"></td>
+            </tr>
+        </table>
+    </div>
+
+    <br><br>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Enter word to search inside the hadith">
+        <button id="search" onclick="searchWord()"><i class='bx bx-search'></i></button>
+    </div>
+    <!-- <div id="valueDisplay"></div> -->
+
+    <div class="chapter-list">
+
+        <br><br>
+        <table id="all-hadith">
+            <thead>
+                <tr>
+                    <th>Hadith No.</th>
+                    <th>Indonesia</th>
+                    <th>Arab</th>
+                </tr>
+            </thead>
+            <tbody id="hadith-data"></tbody>
+        </table>
+        <!-- <p>Chapter:<span id="hadith-chapter-no"></span></p> -->
+    </div>
+
+
+    </div>
+    <script src="hadithChapterBaru.js"></script>
+</body>
+
+</html>
